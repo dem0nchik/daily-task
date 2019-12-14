@@ -1,0 +1,68 @@
+.header {
+    height: 40px;
+    border-bottom: 1px solid #333;
+    background-color: #fcfcfc;
+    p {
+        font-size: 18px;
+        text-transform: uppercase;
+        cursor: pointer;
+        padding: 11px 0 0 40px;
+        &:hover {
+            color: #44f;
+        }
+    }
+}
+.auth {
+    z-index: 100;
+    background-color: rgb(157, 157, 255);
+    position: fixed;
+    top: 30%;
+    left: 40%;
+    height:100px;
+    max-width:270px;
+    border-top-right-radius: 30px;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    padding: 20px 10px 0px 10px;
+    & span {
+        color: red;
+        cursor: pointer;
+        position: relative;
+        font-size: 20px;
+        left: 93%;
+        bottom: 10px;
+        &:hover {
+            transform: rotate(0deg);
+            transition: all .7s ease-out;
+        }
+    }
+    &-login input {
+        padding: 5px;
+        margin: -24px 8px 0 0;
+        display: block;
+    }
+    &-login {
+        font-size: 16px;
+    }
+    &-btn {
+        display: block;
+        cursor: pointer;
+        width: 250px;
+        font-weight: 600;
+        height: 30px;
+        background: #42f053;
+        border: 1px solid black;
+        margin: 10px auto;
+        
+        transition:all .7s ease-out;
+        &:hover {
+            
+            background: #80ee8b;
+        }
+    }
+    
+}
+@media (max-width: 500px) {
+    .auth {
+        left: 15%;
+    }
+}
