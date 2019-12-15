@@ -1,5 +1,5 @@
 <?php
-if($_COOKIE['user'] == '') {
+if(!isset($_COOKIE['user'])) {
     header("Access-Control-Allow-Origin:*");
     header("Content-type: application/json");
     echo json_encode(["error"=>'user not found']);

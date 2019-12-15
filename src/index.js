@@ -5,6 +5,10 @@ import { Provider } from 'react-redux';
 import App from './App';
 import store from './store/store'
 
+
+setTimeout(() => document.querySelectorAll('body > div')[1].style.display = 'none', 100);
+
+
 ReactDOM.render(
   <Provider store={store}>
     <App />

@@ -1,6 +1,18 @@
 <?php
     include 'database.php';
-    $task = $mysql->query("SELECT * FROM `task`");
+    if(isset($_GET["c"])) {
+        $count = $mysql->query("SELECT COUNT(*) FROM `task`");
+        echo json_encode(["count"=>$count->fetch_assoc()['COUNT(*)']]);
+        exit();
+    }
+    $page = $_GET["p"];
+    if(isset($page)) {
+        $page *= 10;
+        $request = "SELECT * FROM `task` ORDER BY id DESC LIMIT $page, 10";
+    } else {
+        $request = "SELECT * FROM `task` ORDER BY id DESC LIMIT 0, 10";
+    }
+    $task = $mysql->query($request);
     while($result =$task->fetch_assoc()) {
         $tasks['id'][] = $result['id'];
         $tasks['description'][] = $result['description'];

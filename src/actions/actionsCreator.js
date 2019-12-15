@@ -81,7 +81,7 @@ export const searchList = (text) => {
 }
 
 
-export const checkedTask = (id) => {
+export const checkedTask = (id, page) => {
   return dispatch => {
     let body = 'id=' + encodeURIComponent(id);
     fetch(utils.url+'/api/chektask.php', {
@@ -93,17 +93,34 @@ export const checkedTask = (id) => {
         })
         
     .then(res => res.json())
-    .then(res => console.log(res))
-    .then(() => dispatch(getList()))
+    .then(() => dispatch(getList(page)))
   };
 };
 
 
-export const getList = () => {
+export const getList = (page = 0) => {
   return dispatch => {
-    fetch(utils.url+'/api/list.php')
+    fetch(utils.url+'/api/list.php?p='+page)
       .then(res => res.json())
       .then(res => dispatch(setList(res)))
   }
+  
 }
 
+export const setCount = data => ({
+  type: 'SET_COUNT',
+  data
+})
+
+export const getCountPag = () => {
+  return dispatch => {
+    fetch(utils.url+'/api/list.php?c')
+      .then(res => res.json())
+      .then(res => dispatch(setCount(res.count)))
+  }
+}
+
+export const setPage= data => ({
+  type: 'SET_PAGE',
+  data
+})

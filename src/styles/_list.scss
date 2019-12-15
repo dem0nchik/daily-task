@@ -48,21 +48,47 @@
     &-wrap {
         padding: 0 10px;
     }
-    &-item {
+    &-pagination {
         display: flex;
+        justify-content: center;
+        margin-top: 20px;
+        & li {
+            padding: 0.2em 0.6em;
+            list-style: none;
+            cursor: pointer;
+            font-weight: 600;
+            border-radius: 50%;
+            &:hover {
+                background-color: rgba(0, 67, 89, 0.3);
+            }
+        }
+        & li + li {
+            margin-left: 2px;
+        }
+    }
+    &-pagination__active {
+        background-color: rgba(0, 67, 89, 0.9);
+        color: #fff;
+    }
+    &-item {
+        display: flex;        
+        flex-direction: column;
         padding: 12px 5px;
         &+& {
             margin-top: 6px;
         }
         &_date {
-            margin-right: 10px;
+            font-size: 14px;
+            margin-bottom: 2px;
         }
         &_desc {
             padding-right: 7%;
+            padding-left: 20px;
             font-size: 16px;
         }
         &_chek {
             position: absolute;
+            margin-top: 12px;
             left: 93%;
             color: #11ff11;
             font-size: 20px;
@@ -101,7 +127,7 @@
         &-search {
             padding: 20px 5px;
             & input {
-                width: 80%;
+                width: 75%;
             }
         }
         &-wrap {

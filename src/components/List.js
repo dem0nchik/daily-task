@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getList, addTask, searchList, checkedTask } from '../actions/actionsCreator';
+import { getList, addTask, searchList, checkedTask, getPage } from '../actions/actionsCreator';
 import Lines from '../components/Lines'
 
 class List extends React.Component {
@@ -12,7 +12,7 @@ class List extends React.Component {
         }
     }
     componentDidMount() {
-        this.props.getList()
+        this.props.getList(0)
     }
 
     searchList(e) {
@@ -70,6 +70,25 @@ class List extends React.Component {
         }
         return listTemplate
     }
+    renderPagination() {
+        let countP = this.props.list.count / 10;
+        let pages = [];
+        for(let i = 0; i < countP; i++) {
+            if(this.props.list.page === i)
+            pages[i] = <li 
+                className='list-pagination__item list-pagination__active' 
+                key={i} 
+                onClick={() => this.props.getPage(i)}
+            >{i+1}</li>
+            else
+            pages[i] = <li 
+                className='list-pagination__item' 
+                key={i} 
+                onClick={() => this.props.getPage(i)}
+            >{i+1}</li>
+        }
+        return <ul className='list-pagination'>{pages.map(el => el)}</ul>
+    }
     render() {
         return (
             <div className='list'>
@@ -90,6 +109,7 @@ class List extends React.Component {
                 <div className='list-wrap'>
                     {this.renderList()}
                 </div>
+                {this.renderPagination()}
             </div>
         )
     }
@@ -98,5 +118,5 @@ class List extends React.Component {
 export default connect( state => ({
     list: state.list,
     user: state.user
-  }), { getList, addTask, searchList, checkedTask } )
+  }), { getList, addTask, searchList, checkedTask, getPage } )
 (List);
