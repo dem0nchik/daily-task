@@ -96,6 +96,8 @@
         }
         &_verific {
             position: absolute;
+            margin-top: 13px;
+            cursor: pointer;
             left: 93%;
             padding-left:5px;
             padding-right:5px;
@@ -132,6 +134,20 @@
         }
         &-wrap {
             padding: 0 5px;
+        }
+    }
+}
+@media (max-width: 500px) {
+    .list {
+        &-item {
+            &_chek {
+                left: 90%;
+                font-size: 16px;
+            }
+            &_verific {
+                left: 90%;
+                font-size: 12px;
+            }
         }
     }
 }

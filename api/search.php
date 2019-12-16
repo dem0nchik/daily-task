@@ -1,8 +1,17 @@
 <?php
     include 'database.php';
+    if(isset($_GET["c"])) {
+        $text = $_GET["s"];
+        $count = $mysql->query("SELECT COUNT(*) FROM `task` WHERE description LIKE '%$text%'");
+        echo json_encode(["count"=>$count->fetch_assoc()['COUNT(*)']]);
+        exit();
+    }
+
     $text = $_GET["s"];
+    $page = $_GET["p"];
+    $page *= 10;
     
-    $srch_task = $mysql->query("SELECT * FROM `task` WHERE description LIKE '%$text%'");
+    $srch_task = $mysql->query("SELECT * FROM `task` WHERE description LIKE '%$text%' ORDER BY id DESC LIMIT $page, 15");
     $count = $srch_task->num_rows;
     if($count == 0)  {
         echo json_encode(["error"=>'not found']);

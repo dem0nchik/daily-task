@@ -8,9 +8,9 @@
     $page = $_GET["p"];
     if(isset($page)) {
         $page *= 10;
-        $request = "SELECT * FROM `task` ORDER BY id DESC LIMIT $page, 10";
+        $request = "SELECT * FROM `task` ORDER BY id DESC LIMIT $page, 15";
     } else {
-        $request = "SELECT * FROM `task` ORDER BY id DESC LIMIT 0, 10";
+        $request = "SELECT * FROM `task` ORDER BY id DESC LIMIT 0, 15";
     }
     $task = $mysql->query($request);
     while($result =$task->fetch_assoc()) {

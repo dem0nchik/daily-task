@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getList, addTask, searchList, checkedTask, getPage } from '../actions/actionsCreator';
+import { getList, addTask, searchList, checkedTask, getPage } from '../actions/listActions';
 import Lines from '../components/Lines'
 
 class List extends React.Component {
@@ -8,7 +8,8 @@ class List extends React.Component {
         super(props);
         this.state = {
             description: '',
-            search: ''
+            search: '',
+            isSrch: false
         }
     }
     componentDidMount() {
@@ -17,6 +18,7 @@ class List extends React.Component {
 
     searchList(e) {
         e.preventDefault();
+        this.setState({isSrch: true})
         this.props.searchList(this.state.search);
     }
 
@@ -71,20 +73,20 @@ class List extends React.Component {
         return listTemplate
     }
     renderPagination() {
-        let countP = this.props.list.count / 10;
+        let countP = this.props.list.count / 15;
         let pages = [];
         for(let i = 0; i < countP; i++) {
             if(this.props.list.page === i)
             pages[i] = <li 
                 className='list-pagination__item list-pagination__active' 
                 key={i} 
-                onClick={() => this.props.getPage(i)}
+                onClick={() => this.props.getPage(i, this.state.isSrch, this.state.search)}
             >{i+1}</li>
             else
             pages[i] = <li 
                 className='list-pagination__item' 
                 key={i} 
-                onClick={() => this.props.getPage(i)}
+                onClick={() => this.props.getPage(i, this.state.isSrch, this.state.search)}
             >{i+1}</li>
         }
         return <ul className='list-pagination'>{pages.map(el => el)}</ul>

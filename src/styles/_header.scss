@@ -2,11 +2,25 @@
     height: 40px;
     border-bottom: 1px solid #333;
     background-color: #fcfcfc;
-    p {
+    display: flex;
+    & ul {
+        display: flex;
+        align-items: center;
+        position: absolute;
+        left: 79%;
+        margin-top: 10px;
+        & li {
+            list-style: none;
+        }
+        & li + li {
+            margin-left: 14px;
+        }
+    }
+    & p {
         font-size: 18px;
         text-transform: uppercase;
         cursor: pointer;
-        padding: 11px 0 0 40px;
+        margin: 11px 0 0 40px;
         &:hover {
             color: #44f;
         }

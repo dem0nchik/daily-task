@@ -1,47 +1,5 @@
 import utils from '../utils'
 
-export const setUser = name => ({
-  type: 'SET_USER',
-  name,
-});
-
-export const showError = err => ({
-  type: 'SHOW_ERROR',
-  err,
-});
-
-export const chekME = () => {
-  return dispatch => {
-    fetch(utils.url+'/api/', {withCredentials: true})
-      .then(res => res.json())
-      .then(res => dispatch(setUser(res.text)))
-  }
-}
-export const postUser = (name) => {
-  return dispatch => {
-    const body = 'name=' + encodeURIComponent(name);
-        fetch(utils.url+'/api/auth.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body
-            })
-        .then(res => res.json())
-        .then(res => {
-            if(res.error) dispatch(showError(res.error))
-            else {
-                dispatch(setUser(name))
-                dispatch(showAuth())
-            }
-        })
-  };
-};
-
-export const showAuth = () => ({
-  type: 'SHOW_AUTH',
-});
-
 export const setList = data => ({
   type: 'SET_LIST',
   data
@@ -72,9 +30,11 @@ export const taskSucces = text => ({
   text
 })
 
-export const searchList = (text) => {
+export const searchList = (text, page = 0) => {
   return dispatch => {
-    fetch(utils.url+'/api/search.php?s='+text)
+    if(text==='') dispatch(setPage(0))
+    dispatch(getCountPag('search', text))
+    fetch(utils.url+`/api/search.php?s=${text}&p=${page}`)
       .then(res => res.json())
       .then(res => dispatch(setList(res)))
   }
@@ -100,6 +60,7 @@ export const checkedTask = (id, page) => {
 
 export const getList = (page = 0) => {
   return dispatch => {
+    dispatch(getCountPag())
     fetch(utils.url+'/api/list.php?p='+page)
       .then(res => res.json())
       .then(res => dispatch(setList(res)))
@@ -112,9 +73,9 @@ export const setCount = data => ({
   data
 })
 
-export const getCountPag = () => {
+export const getCountPag = (module = 'list', srch = '') => {
   return dispatch => {
-    fetch(utils.url+'/api/list.php?c')
+    fetch(utils.url+`/api/${module}.php?c&s=${srch}`)
       .then(res => res.json())
       .then(res => dispatch(setCount(res.count)))
   }
@@ -124,3 +85,14 @@ export const setPage= data => ({
   type: 'SET_PAGE',
   data
 })
+
+export const getPage = (page, isSrch, text) => {
+  return dispatch => {
+    if(isSrch) {
+      dispatch(searchList(text, page))
+    } else {
+      dispatch(getList(page))
+    }
+    dispatch(setPage(page))
+  }
+}
